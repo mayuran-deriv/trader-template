@@ -18,7 +18,7 @@ export const SideNav: React.FC = () => {
     const { activeSidebar, toggleSidebar, theme } = useMainLayoutStore();
 
     return (
-        <nav className="flex fixed z-[60] flex-col h-[100dvh] sticky top-0 w-16 border-r border-theme bg-theme overflow-y-auto">
+        <nav className="flex fixed z-[60] flex-col h-[100dvh] sticky top-0 right-0 w-16 border-l border-theme bg-theme overflow-y-auto">
             <div className="flex flex-col items-center gap-8 py-4">
                 {/* TODO: Add customize logo */}
                 {/* <a href="/" className="">

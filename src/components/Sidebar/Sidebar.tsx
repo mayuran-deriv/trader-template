@@ -11,8 +11,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, title, childr
     return (
         <div
             className={`absolute h-full w-[320px] bg-theme shadow-lg transform transition-transform duration-300 ease-in-out ${
-                isOpen ? "translate-x-0" : "-translate-x-full"
-            } z-[51] flex flex-col overflow-hidden`}
+                isOpen ? "translate-x-0" : "translate-x-full"
+            } right-0 z-[51] flex flex-col overflow-hidden`}
         >
             <div className="p-4 flex justify-between items-center">
                 <h2 className="text-lg font-bold">{title}</h2>

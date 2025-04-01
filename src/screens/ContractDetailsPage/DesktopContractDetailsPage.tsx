@@ -79,11 +79,6 @@ const DesktopContractDetailsPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex-1 flex flex-col">
-                    <div className="ml-4 h-full">
-                        <ContractDetailsChart />
-                    </div>
-                </div>
             </div>
         </div>
     );
