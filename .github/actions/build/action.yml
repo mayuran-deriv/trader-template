@@ -1,0 +1,20 @@
+name: Build Project
+description: Build the project with environment variables
+inputs:
+  RSBUILD_REST_URL:
+    description: REST API server URL
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Install rspack binding
+      shell: bash
+      run: |
+        npm install @rspack/binding-linux-x64-gnu || true
+        npm rebuild @rspack/binding-linux-x64-gnu
+
+    - name: Build project
+      shell: bash
+      env:
+        RSBUILD_REST_URL: ${{ inputs.RSBUILD_REST_URL }}
+      run: npm run build
