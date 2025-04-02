@@ -3,7 +3,7 @@ const axios = require("axios");
 exports.handler = async (event) => {
     const API_TOKEN = "nfp_Y9QnAgdshGjYYN6s4n3CbSw3xxS6nFyMbd5b";
     const SITE_NAME = `user-${Date.now()}-trading-app`; // Unique site name
-    const REPO_URL = "https://github.com/mayuran-deriv/trader-template";
+    const REPO_URL = "mayuran-deriv/trader-template";
 
     try {
         const response = await axios.post(
