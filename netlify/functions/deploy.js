@@ -1,37 +1,28 @@
 const axios = require("axios");
 
 exports.handler = async (event) => {
-    const NETLIFY_AUTH_TOKEN = "nfp_Y9QnAgdshGjYYN6s4n3CbSw3xxS6nFyMbd5b"; // Replace with your token
-    const GIT_REPO = "mayuran-deriv/trader-template"; // Replace with your GitHub repo URL
+    const API_TOKEN = "nfp_Y9QnAgdshGjYYN6s4n3CbSw3xxS6nFyMbd5b";
+    const SITE_NAME = `user-${Date.now()}-trading-app`; // Unique site name
+    const REPO_URL = "mayuran-deriv/trader-template";
 
     try {
-        const userId = Math.random().toString(36).substring(2, 10); // Generate unique user ID
-        const siteName = `test-${userId}`; // Unique site name
-
-        // Step 1: Create a new site for the user
-        const siteResponse = await axios.post(
+        const response = await axios.post(
             "https://api.netlify.com/api/v1/sites",
             {
-                name: siteName,
-                repo: {
-                    url: GIT_REPO, // The GitHub repo to deploy from
-                    provider: "github",
-                    branch: "main",
-                },
+                name: SITE_NAME,
+                repo: { provider: "github", repo: REPO_URL, branch: "main" },
             },
             {
                 headers: {
-                    Authorization: `Bearer ${NETLIFY_AUTH_TOKEN}`,
+                    Authorization: `Bearer ${API_TOKEN}`,
+                    "Content-Type": "application/json",
                 },
             }
         );
 
-        const siteId = siteResponse.data.id;
-        const siteUrl = siteResponse.data.ssl_url || siteResponse.data.url;
-
         return {
             statusCode: 200,
-            body: JSON.stringify({ siteId, siteUrl }),
+            body: JSON.stringify({ url: response.data.url }),
         };
     } catch (error) {
         return {
