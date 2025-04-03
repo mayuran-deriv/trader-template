@@ -1,54 +1,39 @@
 const axios = require("axios");
 
 exports.handler = async (event) => {
-    const API_TOKEN = "nfp_Y9QnAgdshGjYYN6s4n3CbSw3xxS6nFyMbd5b";
-    const SITE_NAME = `user-${Date.now()}-trading-app`; // Unique site name
-    const REPO_URL = "mayuran-deriv/trader-template"; // Your repo
-    const BRANCH = "main"; // Change if needed
+    const NETLIFY_AUTH_TOKEN = "nfp_Y9QnAgdshGjYYN6s4n3CbSw3xxS6nFyMbd5b"; // Replace with your token
+    const GIT_REPO = "https://github.com/mayuran-deriv/trader-template"; // Replace with your GitHub repo URL
 
     try {
-        // Step 1: Create the site
+        const userId = Math.random().toString(36).substring(2, 10); // Generate unique user ID
+        const siteName = `test-${userId}`; // Unique site name
+
+        // Step 1: Create a new site for the user
         const siteResponse = await axios.post(
             "https://api.netlify.com/api/v1/sites",
             {
-                name: SITE_NAME,
+                name: siteName,
                 repo: {
+                    url: GIT_REPO, // The GitHub repo to deploy from
                     provider: "github",
-                    repo: REPO_URL,
-                    branch: BRANCH,
+                    branch: "main",
                 },
             },
             {
                 headers: {
-                    Authorization: `Bearer ${API_TOKEN}`,
-                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${NETLIFY_AUTH_TOKEN}`,
                 },
             }
         );
 
         const siteId = siteResponse.data.id;
-        console.log("Site Created:", siteResponse.data);
-
-        // Step 2: Trigger a build manually
-        const buildResponse = await axios.post(
-            `https://api.netlify.com/api/v1/sites/${siteId}/builds`,
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${API_TOKEN}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        console.log("Build Triggered:", buildResponse.data);
+        const siteUrl = siteResponse.data.ssl_url || siteResponse.data.url;
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ url: siteResponse.data.url }),
+            body: JSON.stringify({ siteId, siteUrl }),
         };
     } catch (error) {
-        console.error("Error:", error.response?.data || error.message);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.response?.data || error.message }),
