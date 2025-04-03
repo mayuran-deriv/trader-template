@@ -2,7 +2,7 @@ const axios = require("axios");
 
 exports.handler = async (event) => {
     const NETLIFY_AUTH_TOKEN = "nfp_Y9QnAgdshGjYYN6s4n3CbSw3xxS6nFyMbd5b"; // Replace with your token
-    const GIT_REPO = "https://github.com/mayuran-deriv/trader-template"; // Replace with your GitHub repo URL
+    const GIT_REPO = "mayuran-deriv/trader-template"; // Replace with your GitHub repo URL
 
     try {
         const userId = Math.random().toString(36).substring(2, 10); // Generate unique user ID
